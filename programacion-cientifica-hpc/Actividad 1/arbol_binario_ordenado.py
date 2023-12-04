@@ -1,5 +1,8 @@
 """ Módulo que provee la clase ArbolBinarioOrdenado mejorado. """
 
+from pila import Pila
+from cola import Cola
+
 class ArbolBinarioOrdenado:
     """ Clase que representa a un TAD de tipo árbol binario ordenado """   
     def __init__(self, tipo) :
@@ -97,4 +100,64 @@ class ArbolBinarioOrdenado:
         l.append(self.__raiz)
         if not self.__arbol_dcho.esta_vacio():
             l += self.__arbol_dcho.in_orden()
+        return l
+
+    def pre_orden_prof_iterativo(self):
+        """ Tarea 1: Método que recorre el árbol de manera iterativa en pre-orden. """ 
+        # Primera versión del algoritmo para recorrer el árbol en profundidad de manera iterativa.
+        l=[]
+        pila = Pila(ArbolBinarioOrdenado)
+        arbol_temp = self
+        while not arbol_temp.esta_vacio():
+            l.append(arbol_temp.raiz())
+            if not arbol_temp.arbol_dcho().esta_vacio():
+                pila.apilar(arbol_temp.arbol_dcho())
+            if not arbol_temp.arbol_izdo().esta_vacio():
+                arbol_temp = arbol_temp.arbol_izdo()
+            elif not pila.esta_vacia():
+                arbol_temp = pila.desapilar()
+            else:
+                break
+        return l
+
+    def in_orden_prof_iterativo(self):
+        """ Tarea 1: Método que recorre el árbol de manera iterativa en orden. """ 
+        l=[]
+        pila = Pila(ArbolBinarioOrdenado)
+        arbol_temp = self
+        nodo_visitado = False
+        pila.apilar(arbol_temp)
+        while not arbol_temp.esta_vacio():
+            if arbol_temp.arbol_izdo().esta_vacio() or nodo_visitado:
+                arbol_temp = pila.desapilar()
+                l.append(arbol_temp.raiz())
+                if arbol_temp.arbol_dcho().esta_vacio():
+                    if not pila.esta_vacia():
+                        nodo_visitado = True
+                    else:
+                        break
+                else:
+                    pila.apilar(arbol_temp.arbol_dcho())
+                    arbol_temp = arbol_temp.arbol_dcho()
+                    nodo_visitado = False
+            else:
+                pila.apilar(arbol_temp.arbol_izdo())
+                arbol_temp = arbol_temp.arbol_izdo()
+        return l
+
+    def amplitud_iterativo(self):
+        """ Tarea 2: Método que recorre el árbol de manera iterativa en amplitud. """ 
+        l = []
+        arbol_temp = self
+        cola = Cola(ArbolBinarioOrdenado)
+        while not arbol_temp.esta_vacio():
+            l.append(arbol_temp.raiz())
+            if not arbol_temp.arbol_izdo().esta_vacio():
+                cola.encolar(arbol_temp.arbol_izdo())
+            if not arbol_temp.arbol_dcho().esta_vacio():
+                cola.encolar(arbol_temp.arbol_dcho())
+            if not cola.esta_vacia():
+                arbol_temp = cola.desencolar()
+            else:
+                break
         return l
