@@ -1,0 +1,43 @@
+close all; clear all;
+
+% Entrada de datios
+xi = 1971:10:2011;
+fi = [33.956, 37.743, 39.434, 40.847, 46.816];
+
+% Genero el polinomio de Newton
+[b, p] = polinomioNewton(xi, fi);
+
+syms x
+
+% Evalúo la función en x = 2005
+eval = subs(p, x, 2005);
+eval_float = vpa(eval, 5); % Fuerzo a ver el resultado con al menos 5 dígitos significativos
+
+% Recorro el polinomio desde x0 hasta xn con pasos de 1 año para obtener la
+% función con precisión.
+
+y = []
+cont = 1
+for i = xi(1):1:xi(end)
+    y(cont) = vpa(subs(p, x, i));
+    cont = cont +1
+end
+
+
+figure
+plot(xi(1):1:xi(end), y)
+
+hold on
+scatter(xi, fi, 'Marker', '*');
+
+% Activa la cuadrícula
+grid on
+
+% Agrega un título
+title('Gráfica de la función seno')
+
+% Agrega etiquetas de eje
+xlabel('Año')
+ylabel('Eje y')
+
+
