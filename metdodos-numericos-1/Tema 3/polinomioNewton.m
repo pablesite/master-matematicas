@@ -8,7 +8,7 @@ function [b, p] = polinomioNewton(xi, fi)
     % fi --> f(x0),..., f(xn)
     % vx --> parte derecha del polinomio (x - x0) *
     % ... * (x - xn-1)
-    % col --> columna de la matriz fi a construir, o grado del polinomio
+    % col --> columna de la matriz fi a construir
     
     % Entrada: (xi, fi) nodos
     % Salida:
