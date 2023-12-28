@@ -4,7 +4,7 @@ close all; clear all;
 x_i = 5:5:15;
 f_i = [1.5434, 1.4186, 1.2925];
 
-% Genero el polinomio de Lagrange
+% Genero el polinomio de Newton
 [b, p_n] = polinomioNewton(x_i, f_i);
 
 % Evalúo la función en alpha = 12
