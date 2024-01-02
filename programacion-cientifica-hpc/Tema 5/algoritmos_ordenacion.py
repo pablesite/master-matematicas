@@ -36,6 +36,18 @@ def ordenacion_insercion(lista, num_comparaciones):
         lista[j] = val
     return num_comparaciones
 
+def ordenacion_insercion_viajante(lista, comparar_terna):
+    """ Algoritmo que ordena valores en una lista con el método de inserción """
+    n = len(lista)
+    for i in range(1, n):
+        val = lista[i]
+        j = i
+        while j > 0 and comparar_terna(lista[j - 1], val):
+            lista[j] = lista[j - 1]
+            j -= 1
+        lista[j] = val
+    return lista
+
 def ordenacion_mergesort(lista, num_comparaciones):
     """ Algoritmo que ordena valores con la estrategia de ordenación por mezcla """
     if len(lista) <= 1:

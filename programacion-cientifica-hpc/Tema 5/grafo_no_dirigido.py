@@ -5,7 +5,8 @@ class GrafoNoDirigido:
 
     def __init__(self, num_nodos):
         self.num_nodos = num_nodos
-        self.matrizady = [0]*num_nodos
+        #self.matrizady = [0]*num_nodos
+        self.matrizady = [[0 for j in range(num_nodos)] for i in range(num_nodos)]
 
     def get_num_nodos(self):
         """ Devuelve el número de nodos"""

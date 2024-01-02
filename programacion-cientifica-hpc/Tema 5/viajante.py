@@ -1,8 +1,6 @@
 """ Implementación de la clase del viajante, usando heurística voraz"""
 
-from algoritmos_ordenacion import ordenacion_insercion
-#from grafo_no_dirigido import GrafoNoDirigido
-
+from algoritmos_ordenacion import ordenacion_insercion_viajante
 from grafo_no_dirigido import GrafoNoDirigido
 
 class Viajante:
@@ -36,7 +34,8 @@ class Viajante:
         for i in range(self.grafo.num_nodos):
             for j in range(i + 1, self.grafo.num_nodos):
                 lista_aux.append(self.grafo.matrizady[i][j])
-        ordenacion_insercion(lista_aux, Viajante.comparar_terna) # Ojo con esto... se pasa como parámetro una función? Debería ajustar el algoritmo de ordenación por insercción
+
+        ordenacion_insercion_viajante(lista_aux, Viajante.comparar_terna)
         return lista_aux
     
     def comprobar_tercera(self, arista):
@@ -110,6 +109,6 @@ class Viajante:
                     arista[0], arista[1] = arista[1], arista[0]
                     self.recorrido.append(arista)
                     break
-            self.distancia += arista[2]
-            self.viaje.append(arista[0])
-            self.viaje.append(0)
+        self.distancia += arista[2]
+        self.viaje.append(arista[0])
+        self.viaje.append(0)
