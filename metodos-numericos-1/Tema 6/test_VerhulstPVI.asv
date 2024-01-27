@@ -1,5 +1,6 @@
 clear all; close all;
 
+%% Método ODE %%
 % Discretizamos la variable
 a = 0; b = 2; N = 30;
 h = (b - a)/N;
@@ -8,7 +9,7 @@ td = a:h:b;
 % Condición inicial
 ya = 10;
 
-%% Método ODE %%
+% Resolución
 [t_ode, y_ode] = ode23('VerhulstPVI', td, ya);
 
 % Representación
@@ -23,7 +24,7 @@ for i = 1:length(N_euler)
     plot(t_euler, y_euler, 'o-')
 
     % Cálculo de errores
-    sol = 3*10./(0.1*10 + (3 - 0.1*10).*exp(-3*t_euler)); % solución teórica.
+    sol =3*10./(0.1*10 + (3 - 0.1*10).*exp(-3*t_euler)); % solución teórica.
     E(i) = max(abs(sol - y_euler));
 end
 
