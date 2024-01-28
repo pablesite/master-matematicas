@@ -7,10 +7,5 @@ function [t, Y] = Euler_Sistemas(f, a, b, N, Ya)
     Y(1,:) = Ya;
     for k = 1:N
         Y(k + 1, :) = Y(k,:) + h*feval(f, t(k), Y(k,:))'; 
-        % Este último vector será traspuesto o no dependiendo cómo defina luego las funciones del sistema.
-        % Si las defino en de tipo fila (con ';', añadiendo columnas para cada
-        % variable del sistema), entonces sí que sería traspuesta. Pero si
-        % las defino de tipo columna (con ',', todas las variables del sistema en la misma columna)
-        % creo que no debería hacer falta trasponer. COMPROBAR
     end
 end
