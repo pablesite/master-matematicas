@@ -1,0 +1,17 @@
+function [t, y] = PuntoMedio(f, a, b, N, y0)
+% Código para resolver un PVI con el método de Heun
+    % Tamaño de paso
+    h = (b - a)/N;
+    % Se discretiza la variable temporal
+    t = a:h:b;
+    t = t(:);
+    % Se inicia el vector solcuión y se añade la condición inicial
+    y = zeros(N + 1, 1);
+    y(1) = y0;
+    for k = 1:N
+        k1 = feval(f, t(k), y(k));
+        ym = y(k) + h/2*k1;
+        k2 = feval(f, t(k) + h/2, y(k) + h/2*k1);
+        y(k + 1) = y(k) + h*k2;
+    end
+end

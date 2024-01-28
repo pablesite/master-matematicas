@@ -4,10 +4,10 @@ clear all; close all;
 a = 0; b = 2; N = 64;
 h = (b - a)/N;
 td = a:h:b;
-td = td(:);
+td = (:);
 
 % Condición inicial
-ya = 10;
+ya = 110;
 
 %% Método ODE %%
 [t_ode, y_ode] = ode23('VerhulstPVI', td, ya);
