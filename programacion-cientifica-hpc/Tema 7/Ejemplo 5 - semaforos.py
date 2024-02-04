@@ -26,7 +26,7 @@ class GestorConexiones(object):
 def conexion(s, gestor):
      logging.debug('Esperando para unirse al gestor')
      with s:
-          nombre = threading.current_thread().getName()
+          nombre = threading.current_thread().name
           gestor.activar(nombre)
           time.sleep(0.1)
           gestor.desactivar(nombre)
