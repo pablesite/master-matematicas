@@ -41,33 +41,42 @@ def contar_palabras(texto):
 
 
 
-#funcion que se aplica
+### Función para procesar un DataFrame (o un trozo de un DataFrame) ###
 def procesar_df(df):
-    #se hace copia del dataframe para no modificarlo
-    ###INSERTA TU CODIGO###
+    # Se hace una copia profunda del dataframe para no modificarlo, con copy()
+    # De esta manera el DataFrame de entrada puedo usarlo para las diferentes
+    # pruebas de cómputo, secuencial y paralelo.
     salida_df = df.copy()
     
-    # reemplaza las comillas
+    # Se reemplazan las comillas. Notar que entre corchetes se indica la columna
+    # del DataFrame sobre la que se hace la transformación.
     salida_df['text'] = reemplazar_comillas(salida_df['text'])
     
-    # pasa el texto a minusculas
-    ###INSERTA TU CODIGO###
+    # Se pasa el texto a minúsculas.
     salida_df['text'] = a_minusculas(salida_df['text'])
     
-    # cuenta el número de palabras y construye columna nueva con nombre num_palabras
-    ###INSERTA TU CODIGO###
+    # Se cuenta el número de palabras y se construye columna nueva con el nombre 
+    # num_palabras. Para añadir una nueva columna al DataFrame basta con incluir
+    # entre corchetes el nombre de la nueva columna.
     num_palabras = contar_palabras(salida_df['text'])
     salida_df['num_palabras'] = num_palabras
   
-    # elimina los textos demasiado largos
+    # Se eliminan los textos demasiado largos. "salida_df['num_palabras'] > 50"
+    # es el filtro que se usa en el DataFrame para devolver, en este caso,
+    # aquellas frases más largas de 50 palabras.
+    # Posteriormente, con el método drop del DataFrame se eliminan las frases
+    # seleccionadas anteriomente, seleccionadas a través de su índice.
+    # Con inplace = True lo que se permite es eliminar las frases en el propio
+    # DataFrame y no devolver nada.
     texto_largo_para_eliminar = salida_df[salida_df['num_palabras'] > 50]
     salida_df.drop(texto_largo_para_eliminar.index, inplace=True)
 
-    # elimina los textos demasiado cortos
+    # Se eliminan los textos demasiado cortos. Fragmento es similar al anterior.
     texto_corto_para_eliminar = salida_df[salida_df['num_palabras'] < 10]
     salida_df.drop(texto_corto_para_eliminar.index, inplace=True)    
     
-    #reinicializa los indices
+    # Se reinicializan los indices. Con reset_index se reindexan los índices
+    # de cada frase para que las frases que han quedado, se indexen en orden.
     salida_df.reset_index(drop=True, inplace=True)
     
     return salida_df
