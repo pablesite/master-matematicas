@@ -3,7 +3,6 @@ import multiprocessing as mp
 import numpy as np
 import time
 import matplotlib.pyplot as plt
-import plotly.graph_objects as go
 #modulo para usar expresiones regulares
 import re
 from multiprocessing import Pool
@@ -81,10 +80,16 @@ def procesar_df(df):
     
     return salida_df
 
-
-def procesar_paralelo(nucleos, procesar_df, data):
+### Función para procesar en paralelo un DataFrame ###
+# Esta función usa la función Pool del módulo multiprocessing, 
+# para crear un grupo de procesos paralelos. Se puede elegir el número de núcleos
+# con el que se va a realizar la paralelización pasándole el argumento nucleos.
+# pool.map() recoge los resultados de la función ejecutada en paralelo (procesar_df)
+# y los retorna en una lista. Finalmente se concatena esa lista y se reindexan
+# los índices.
+def procesar_paralelo(nucleos, procesar_df, df):
     with Pool(nucleos) as pool:
-        res = pool.map(procesar_df, data)
+        res = pool.map(procesar_df, df)
     
     df_procesado = pd.concat(res)
     df_procesado.reset_index(drop=True, inplace=True)
@@ -94,118 +99,83 @@ def procesar_paralelo(nucleos, procesar_df, data):
 
 if __name__=="__main__":
     
+    """ Construcción del DataFrame """
+    
     tiempo_inicial = time.time()
     
-    dataframe_brown = pd.DataFrame({
+    df_brown = pd.DataFrame({
     'text': construye_textos() + construye_textos() + construye_textos()
           + construye_textos() + construye_textos() + construye_textos() 
           + construye_textos() + construye_textos() + construye_textos()
           + construye_textos() + construye_textos() + construye_textos()
     })
     
-    """
-    dataframe_brown = pd.DataFrame({
-    'text': construye_textos()
-    })
-    """
     
     tiempo_final = time.time()
-    print("La construcción del dataframe ha tardado " + str(tiempo_final - tiempo_inicial) + " segundos.\n")
-
-    print("df ORIGINAL:", dataframe_brown.head(5),"\n")
+    tiempo_total_construccion_DF = tiempo_final - tiempo_inicial
+    print("La construcción del DataFrame ha tardado " + str(tiempo_total_construccion_DF) + " segundos.\n")
     
-    # se  toma tiempo inicial
-    ###INSERTA TU CODIGO###
-    tiempo_inicial = time.time()
+    print("DF original: Primeras 3 frases del DF:", df_brown.head(3), "\n")
+    print("DF original: Últimas 3 frases del DF:", df_brown.tail(3), "\n")
+    
+    
     ###########################################################################
     
     """ejecución secuencial"""
 
+    # Se toma tiempo inicial
+    tiempo_inicial = time.time()
     
-    #se llama a la funcion procesar_df() con dataframe_brown
-    ###INSERTA TU CODIGO###
-    df_procesado = procesar_df(dataframe_brown)
-    ###########################################################################
-    
- 
-    # se muestra tiempo total
-    ###INSERTA TU CODIGO###
+    # Se llama a la funcion procesar_df() con dataframe_brown. En este caso
+    # todo el DataFrame construido se procesa de golpe en un sólo procesador.
+    df_procesado = procesar_df(df_brown)
+
+    # Se toma el tiempo final y se muestra tiempo total
     tiempo_final = time.time()
-    tiempo_secuencial = tiempo_final - tiempo_inicial
-    print("La ejecución SECUENCIAL ha tardado " + str(tiempo_secuencial) + " segundos.\n")
+    tiempo_total_secuencial = tiempo_final - tiempo_inicial
+    print("La ejecución SECUENCIAL ha tardado " + str(tiempo_total_secuencial) + " segundos.\n")
+    
+    # Se muestran las primeros 3 frases y las 3 últimas.
+    print("Ejecución secuencial: Primeras 3 frases del DF:", df_procesado.head(3), "\n")
+    print("Ejecución secuencial: Últimas 3 frases del DF:", df_procesado.tail(3), "\n")
+ 
+    
     ###########################################################################
-    
-    #muestra fila 0
-    #print(df_procesado.loc()[0])
-    #print(df_procesado)
-    #print("df PROCESADO - text: \n", df_procesado['text'], "\n")
-    #print("df PROCESADO - numPalabras: \n", df_procesado['num_palabras'], "\n")
-    print("df PROCESADO SECUENCIAL:", df_procesado.head(5), "\n")
-    #print(df_procesado.tail(1))
-    
-    #retorna el numero de núcleos en el sistema, te puede servir para decidir el número de procesos
-    print("El sistema cuenta con ", mp.cpu_count(), "núcleos.\n")
-    
-   
 
     """ejecución paralela"""
 
-    """
-    #divide en trozos el dataframe, decide el numero de trozos y haz comparaciones de rendimientos
-    trozos_df = np.array_split(dataframe_brown,50)
+    ### Funcionalidad que muestra el tiempo en base a la cantidad de particiones y el 
+    ### número de núcleos elegido ###
     
-    # se  toma tiempo inicial
-    ###INSERTA TU CODIGO###
-    tiempo_inicial = time.time()
-    ###########################################################################
+    # En primer lugar, se imprime el número de núcleos disponible en la CPU
+    print("El sistema cuenta con ", mp.cpu_count(), "núcleos.\n")
     
-    #se crea el pool de procesos, decide cuantos procesos crear
-    ###INSERTA TU CODIGO###
-    
-    ###########################################################################
-    
-    #se invoca a la función y se concatenan los resultados de cada trozo con pd.concat(resultados del map)
-    ###INSERTA TU CODIGO###
-    with Pool(10) as pool:
-        res = pool.map(procesar_df, trozos_df)
-    
-    df_procesado = pd.concat(res)
-    df_procesado.reset_index(drop=True, inplace=True)
+    # Se inicializan las variables en forma de lista, para testear todas las posibilidades.
+    # Lista de particiones
+    trozos = list([1, 20, 40, 60, 80, 100, 200, 300, 400, 500]) 
+    # Lista de núcleos
+    nucleos = list(range(1, mp.cpu_count() + 1 )) 
+    # Matriz para el vector de tiempos (trozos x núcleos)
+    tiempos = [[0] * len(trozos) for i in range(len(nucleos))] 
+    # Lista con el tamaño total del eje x. Para comparar.
+    tiempo_total_secuencial = [tiempo_total_secuencial] * len(nucleos)
 
-
-    ###########################################################################
-    # se muestra tiempo total
-    ###INSERTA TU CODIGO###
-    tiempo_final = time.time()
-    print("La ejecución PARALELA ha tardado " + str(tiempo_final - tiempo_inicial) + " segundos.\n")
-    ###########################################################################   
-    
-    # se muestra la fila 0
-    #print(df_procesado)
-    #print(df_procesado.loc()[0])
-    #print("df PROCESADO PARALELO:", df_procesado, "\n")
-
-    """
-    ###########################################################################
-
-    """ Funcion que muestra el tiempo en base a la cantidad de trozos """
-    
-
-    trozos = list([1, 20, 40, 60, 80, 100, 200, 300, 400, 500])
-    nucleos = list(range(1, mp.cpu_count() + 1 ))
-    tiempos = [[0] * len(trozos) for i in range(len(nucleos))]
-    tiempo_secuencial = [tiempo_secuencial] * len(nucleos)
-
+    # Se recorre cada núcleo, y para núcleo, cada partición definida en "trozos". 
+    # Para cada caso se ejecuta la función "procesar_paralelo" y se obtiene 
+    # la medida del tiempo consumido. Finalmente se almacenan todos los resultados
+    # en tiempos y se representan en una gráfica que incluye de un vistazo todas
+    # las posibilidades.
     for i in nucleos:
         k = 0
         for j in trozos:
             
-            trozos_df = np.array_split(dataframe_brown, j)
+            trozos_df = np.array_split(df_brown, j)
             
             tiempo_inicial = time.time()
             df_procesado_paralelo = procesar_paralelo(i, procesar_df, trozos_df)
             if (i == 6 and k == 4):
-                print("df PROCESADO PARALELO:", df_procesado_paralelo.head(5), "\n")
+                print("Ejecución paralela: Primeras 3 frases del DF:", df_procesado_paralelo.head(3), "\n")
+                print("Ejecución paralela: Últimas 3 frases del DF:", df_procesado_paralelo.tail(3), "\n")
             tiempo_final = time.time()
             
             tiempos[i - 1][k] = tiempo_final - tiempo_inicial
@@ -217,11 +187,11 @@ if __name__=="__main__":
     fig.set_size_inches(16,10)
     ax.plot(nucleos, tiempos)
     ax.plot(nucleos, tiempos,  "o")
-    ax.plot(nucleos, tiempo_secuencial)
+    ax.plot(nucleos, tiempo_total_secuencial)
     plt.legend(trozos)
     plt.grid(True)
-    ax.tick_params(labelsize=12)
     ax.set_xticks(nucleos)
-    ax.set_title("Tiempo para cada número de núcleos. Cada gráfica corresponde a un número de trozos", fontsize=12)
+    ax.set_title("Tiempo para cada número de núcleos. Cada gráfica corresponde a un número de particiones", fontsize=12)
+    ax.tick_params(labelsize=12)
     plt.show()
    
