@@ -1,16 +1,16 @@
 clear all; close all;
 
 % Discretizamos la variable
-a = 0; b = 2; N = 64;
+a = 0; b = 2; N = 2;
 h = (b - a)/N;
 td = a:h:b;
 td = td(:);
 
 % Condición inicial
-ya = 10;
+ya = 0.5;
 
 %% Método ODE %%
-[t_ode, y_ode] = ode23('VerhulstPVI', td, ya);
+[t_ode, y_ode] = ode23('Funcion_pregunta_test_9', td, ya);
 
 % Representación
 figure
@@ -22,7 +22,7 @@ N_euler = [2, 4, 8, 16, 32, 64];
 E_euler = zeros(length(N_euler), 1);
 figure
 for i = 1:length(N_euler)
-    [t_euler, y_euler] = Euler('VerhulstPVI', a, b, N_euler(i), ya);
+    [t_euler, y_euler] = Euler('Funcion_pregunta_test_9', a, b, N_euler(i), ya);
     plot(t_euler, y_euler, 'o-')
     hold on
     % Cálculo de errores
@@ -42,7 +42,7 @@ N_Punto_Medio = [2, 4, 8, 16, 32, 64];
 e_Punto_Medio = zeros(length(N_Punto_Medio), 1); % Error a partir de las soluciones discretas
 figure()
 for i = 1:length(N_Punto_Medio)
-    [t_Punto_Medio, y_Punto_Medio] = PuntoMedio('VerhulstPVI', a, b, N_Punto_Medio(i), ya);
+    [t_Punto_Medio, y_Punto_Medio] = PuntoMedio('Funcion_pregunta_test_9', a, b, N_Punto_Medio(i), ya);
     plot(t_Punto_Medio, y_Punto_Medio, 'o-')
     hold on
     % Cálculo de errores
@@ -67,7 +67,7 @@ e_huen = zeros(length(N_Heun), 1); % Error a partir de las soluciones discretas
 figure
 for i = 1:length(N_Heun)
     
-    [t_heun, y_heun] = Heun('VerhulstPVI', a, b, N_Heun(i), ya);
+    [t_heun, y_heun] = Heun('Funcion_pregunta_test_9', a, b, N_Heun(i), ya);
     
     plot(t_heun, y_heun, 'o-')
     hold on
@@ -96,7 +96,7 @@ N_rk = [2, 4, 8, 16, 32, 64];
 E_rk = zeros(length(N_rk), 1);
 figure
 for i = 1:length(N_rk)
-    [t_rk, y_rk] = RungeKutta('VerhulstPVI', a, b, N_rk(i), ya);
+    [t_rk, y_rk] = RungeKutta('Funcion_pregunta_test_9', a, b, N_rk(i), ya);
     plot(t_rk, y_rk, 'o-')
     hold on
     % Cálculo de errores

@@ -4,3 +4,6 @@
 [submodule "programacion-cientifica-hpc/Act.-Grupal---Polinomios-de-Chebyshev"]
 	path = programacion-cientifica-hpc/Act.-Grupal---Polinomios-de-Chebyshev
 	url = https://github.com/pablesite/Act.-Grupal---Polinomios-de-Chebyshev.git
+[submodule "metodos-numericos-1/metodos-numericos-1/MN_Act.Grupa-l--Nave-Espacial"]
+	path = metodos-numericos-1/metodos-numericos-1/MN_Act.Grupa-l--Nave-Espacial
+	url = https://github.com/pablesite/MN_Act.Grupa-l--Nave-Espacial.git
