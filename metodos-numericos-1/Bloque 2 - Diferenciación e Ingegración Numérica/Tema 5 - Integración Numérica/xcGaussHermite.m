@@ -12,3 +12,4 @@ ci = double((2^(n-1)*factorial(n)*sqrt(pi))./(n^2*subs(H{n}^2, x, xi)));
 
 % La solución a la integral será:
 % sum (ci(i)*x(i))
+% no será sum(xi(i)*f(x(i))??

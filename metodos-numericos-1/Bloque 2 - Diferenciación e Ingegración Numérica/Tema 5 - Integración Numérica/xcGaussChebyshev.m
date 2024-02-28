@@ -9,3 +9,7 @@ for k = 2:n
 end
 xi = double(solve(T{n+1} == 0, x));
 ci = pi/n;
+
+% La solución a la integral será:
+% sum (ci(i)*x(i))
+% no será sum(xi(i)*f(x(i))??

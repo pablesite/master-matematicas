@@ -1,4 +1,4 @@
-function [t, y] = RungeKutta(f, a, b, N, y0)
+ function [t, y] = RungeKutta(f, a, b, N, y0)
 % Código para resolver un PVI con el método de Heun
     % Tamaño de paso
     h = (b - a)/N;

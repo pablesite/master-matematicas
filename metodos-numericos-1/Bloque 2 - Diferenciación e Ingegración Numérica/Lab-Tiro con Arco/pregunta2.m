@@ -1,6 +1,6 @@
 
 close all; clear all;
-addpath('C:\Users\Pablo Ruiz\Desktop\Proyectos\master-matematicas\metdodos-numericos-1\Lab-Mecanismo Articulado') 
+addpath('C:\Users\Pablo Ruiz\Desktop\Proyectos\master-matematicas\metodos-numericos-1\Bloque 1 - Interpolación\Tema 3 - Interpolación') 
 % Entrada de datos
 a = 0;
 b = 0.5;

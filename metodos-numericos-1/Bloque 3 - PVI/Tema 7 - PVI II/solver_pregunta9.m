@@ -9,7 +9,7 @@ y0 = 0.5;
 
 %N = 4;
 %h = (b - a)/N;
-h = 1;
+h = 0.1;
 td = a:h:b;
 N = length(td);
 td = td(:);

@@ -1,6 +1,6 @@
 % ode23   --> non-stiff, low order
 % ode113  --> non-stiff, variable order
-% ode15s  --> stiff, variable order, includes DAE
+% ode15s  --> stiff, variable order, includes DAE 
 % ode23s  --> stiff, low order
 % ode23t  --> trapezoid rule
 % ode23tb --> stiff, low order

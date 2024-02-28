@@ -10,3 +10,7 @@ end
 xi = double(solve(p{n+1} == 0, x));
 dpn = diff(p{n+1});
 ci = double(2./(1-xi.^2)./(subs(dpn, x, xi)).^2);
+
+% La solución a la integral será:
+% sum (ci(i)*x(i))
+% no será sum(xi(i)*f(x(i))??
