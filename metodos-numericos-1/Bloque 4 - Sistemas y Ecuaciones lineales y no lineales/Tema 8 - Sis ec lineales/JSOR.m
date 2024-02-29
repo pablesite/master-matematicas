@@ -1,23 +1,16 @@
-function [x, iter, incre] = Gauss_Seidel(A, b, x0, tol, maxiter)
+function [x, iter, incre] = JSOR(A, b, x0, w, tol, maxiter)
     b = b(:);
     x0 = x0(:);
-    x = x0;
     iter = 0;
     incre = tol + 1; % Criterio de parada?
 
-    D = diag(diag(A));
-    L = tril(A, -1);
-    U = triu(A, 1);
-    
-    M = D + L;
-    N = -U;
+
+    d = diag(A);
+    iD = diag(1./d);
 
     while iter < maxiter && incre > tol
-        d = b - U*x0;
-        x(1) = d(1)/M(1, 1);
-        for j = 2:length(d)
-            x(j) = (d(j) - M(j, 1:j - 1)*x(1:j - 1))/M(j, j);
-        end
+        r = b - A*x0;
+        x = x0 + w*iD*r;
         % Diferentes criterios de parada.
         %incre = norm(x - x0, inf);
         %incre = norm(b - A*x);

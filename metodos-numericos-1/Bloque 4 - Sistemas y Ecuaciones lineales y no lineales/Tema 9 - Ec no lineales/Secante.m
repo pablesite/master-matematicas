@@ -12,6 +12,7 @@ function [sol, iter, ACOC, incre1, incre2] = Secante(fun, x0, xm1, tol, maxiter)
         % Cálculo de Secante
         dif = (fx0 - fxm1)/(x0 - xm1);
         x1 = x0 - fx0/dif;
+        
         % Actualizo criterio de parada
         incre1 = norm(x1 - x0);
         p = [p incre1];
