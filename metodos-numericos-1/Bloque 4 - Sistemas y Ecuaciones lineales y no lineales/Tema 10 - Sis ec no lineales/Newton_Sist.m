@@ -7,8 +7,8 @@ function [sol, iter, ACOC, incre1, incre2] = Newton_Sist(F, x0, tol, maxiter)
     incre2 = tol + 1;
     p = [];
 
-    %while(incre2 > tol && incre1 > tol && iter < maxiter)
-    while (incre1 + incre2 > tol && iter < maxiter)
+    while(incre2 > tol && incre1 > tol && iter < maxiter)
+    %while (incre1 + incre2 > tol && iter < maxiter)
         % Cálculo de Newton
         x = x0 - dFx\Fx;
         

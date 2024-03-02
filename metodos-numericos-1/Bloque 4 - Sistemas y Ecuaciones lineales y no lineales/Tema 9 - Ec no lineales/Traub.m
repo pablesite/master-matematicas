@@ -1,4 +1,4 @@
-function [sol, iter, ACOC, incre1, incre2] = Newton(fun, x0, tol, maxiter)
+function [sol, iter, ACOC, incre1, incre2] = Traub(fun, x0, tol, maxiter)
     digits(200)
     x0 = x0(:);
     iter = 0;
@@ -9,7 +9,9 @@ function [sol, iter, ACOC, incre1, incre2] = Newton(fun, x0, tol, maxiter)
 
     while(incre2 > tol && incre1 > tol && iter < maxiter)
         % Cálculo de Newton
-        x1 = x0 - fx0/dfx0;
+        y = x0 - fx0/dfx0;
+        [fy] = feval(fun, y);
+        x1 = y - fy/dfx0;
         
         % Actualizo criterio de parada
         incre1 = norm(x1 - x0);

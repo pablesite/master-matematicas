@@ -1,6 +1,5 @@
-function [F, dF] = Sistema(x)
+function [F, dF] = Sistema(X)
     x = X(1); y = X(2);
     F = [exp(x).* exp(y) + x.*cos(y); x + y - 1];
-    % 23' en el vídeo
-    dF = [ ; ];
+    dF = [exp(x).*exp(y) + cos(y), exp(x).*exp(y) - x.*sin(y); 1, 1];
 end

@@ -1,4 +1,4 @@
-function [sol, iter, ACOC, incre1, incre2] = RN_Sist(F, x0, tol, maxiter)
+function [sol, iter, ACOC, incre1, incre2] = Newton_Jarrat_Sist(F, x0, tol, maxiter)
     % Creo que no funciona bien y no se por qué.
     digits(200)
     x0 = x0(:);
@@ -7,13 +7,10 @@ function [sol, iter, ACOC, incre1, incre2] = RN_Sist(F, x0, tol, maxiter)
     incre1 = tol + 1;
     incre2 = tol + 1;
     p = [];
-
-    a = -0.5; b = 1.5;
-
+    
     while(incre2 > tol && incre1 > tol && iter < maxiter)
     %while (incre1 + incre2 > tol && iter < maxiter)
-    
-        % Cálculo de RN
+        % Cálculo de Newton Jarrat
         u = dFx\Fx;
         z = x0 - 2/3*u;
         [Fz, dFz] = feval(F, z);
@@ -21,9 +18,6 @@ function [sol, iter, ACOC, incre1, incre2] = RN_Sist(F, x0, tol, maxiter)
         y = x0 - 1/2*((3*dFz - dFx)\(3*dFz + dFx))*u;
         [Fy, dFy] = feval(F, y);
         x = y - dFy\Fy;
-        a = 0.5; b = 3/2;
-        x = y - (a*dFx - b*dFz)\Fy; % Para el RN
-
 
         % Actualizo criterio de parada
         incre1 = norm(x - x0);

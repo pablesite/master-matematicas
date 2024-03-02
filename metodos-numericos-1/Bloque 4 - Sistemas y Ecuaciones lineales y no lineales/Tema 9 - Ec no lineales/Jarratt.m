@@ -1,4 +1,7 @@
-function [sol, iter, ACOC, incre1, incre2] = Newton(fun, x0, tol, maxiter)
+function [sol, iter, ACOC, incre1, incre2] = Jarratt(fun, x0, tol, maxiter)
+    % Método de Jarrat es óptimo porque se cumple que
+    % p = 2^(d-1) dónde p es el orden (4) y d es el número
+    % de evaluaciones (en este caso 3).
     digits(200)
     x0 = x0(:);
     iter = 0;
@@ -8,8 +11,10 @@ function [sol, iter, ACOC, incre1, incre2] = Newton(fun, x0, tol, maxiter)
     p = [];
 
     while(incre2 > tol && incre1 > tol && iter < maxiter)
-        % Cálculo de Newton
-        x1 = x0 - fx0/dfx0;
+        % Cálculo de Jarrat
+        y = x0 - 2/3*(fx0/dfx0);
+        [fy, dfy] = feval(fun, y);
+        x1 = x0 - 1/2*((3*dfy + dfx0)/(3*dfy - dfx0))*(fx0/dfx0);
         
         % Actualizo criterio de parada
         incre1 = norm(x1 - x0);

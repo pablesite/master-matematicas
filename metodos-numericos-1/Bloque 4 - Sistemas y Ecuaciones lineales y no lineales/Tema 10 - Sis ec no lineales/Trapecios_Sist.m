@@ -1,30 +1,20 @@
-function [sol, iter, ACOC, incre1, incre2] = RN_Sist(F, x0, tol, maxiter)
+function [sol, iter, ACOC, incre1, incre2] = Trapecios_Sist(F, x0, tol, maxiter)
     % Creo que no funciona bien y no se por qué.
     digits(200)
     x0 = x0(:);
     iter = 1;
-    [Fx, dFx] = feval(F,x0);
+    [Fx, dFx] = feval(F, x0);
     incre1 = tol + 1;
     incre2 = tol + 1;
     p = [];
 
-    a = -0.5; b = 1.5;
-
     while(incre2 > tol && incre1 > tol && iter < maxiter)
     %while (incre1 + incre2 > tol && iter < maxiter)
-    
-        % Cálculo de RN
-        u = dFx\Fx;
-        z = x0 - 2/3*u;
-        [Fz, dFz] = feval(F, z);
-
-        y = x0 - 1/2*((3*dFz - dFx)\(3*dFz + dFx))*u;
+        % Cálculo de Trapecios
+        y = x0 - dFx\Fx;
         [Fy, dFy] = feval(F, y);
-        x = y - dFy\Fy;
-        a = 0.5; b = 3/2;
-        x = y - (a*dFx - b*dFz)\Fy; % Para el RN
-
-
+        x = x0 - 2*((dFx + dFy)\Fx);
+        
         % Actualizo criterio de parada
         incre1 = norm(x - x0);
         p = [p incre1];
@@ -42,9 +32,6 @@ function [sol, iter, ACOC, incre1, incre2] = RN_Sist(F, x0, tol, maxiter)
         ACOC = log(p(3:end)./p(2:end - 1))./log(p(2:end - 1)./p(1:end - 2));
     else
         disp('necesito más iteraciones')
-        %Esto para el caso en que lo haya hecho en 2 iteraciones o menos.
-        sol = x;
-        ACOC = 0;
     end
     
     incre1 = vpa(incre1, 6);

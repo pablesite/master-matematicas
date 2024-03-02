@@ -1,15 +1,16 @@
-function [sol, iter, ACOC, incre1, incre2] = Newton(fun, x0, tol, maxiter)
+function [sol, iter, ACOC, incre1, incre2] = Steffensen(fun, x0, tol, maxiter)
     digits(200)
     x0 = x0(:);
     iter = 0;
     [fx0, dfx0] = feval(fun,x0);
+    [fw0, dfw0] = feval(fun,x0 + fx0);
     incre1 = tol + 1;
     incre2 = tol + 1;
     p = [];
 
     while(incre2 > tol && incre1 > tol && iter < maxiter)
-        % Cálculo de Newton
-        x1 = x0 - fx0/dfx0;
+        % Cálculo de Steffensen
+        x1 = x0 - fx0^2/(fw0 - fx0);
         
         % Actualizo criterio de parada
         incre1 = norm(x1 - x0);
@@ -17,11 +18,12 @@ function [sol, iter, ACOC, incre1, incre2] = Newton(fun, x0, tol, maxiter)
         x0 = x1;
         % Actualizo la evaluación de la función
         [fx0, dfx0] = feval(fun,x0);
+        [fw0, dfw0] = feval(fun,x0 + fx0);
         incre2 = norm(fx0);
         iter = iter + 1;
     end
 
-    % Cálculo del ACOC (Orden de convergencia computacional)
+    % Cálculo del ACOC
     ACOC = log(p(3:end)./p(2:end - 1))./log(p(2:end - 1)./p(1:end - 2));
     sol = x1;
     incre1 = vpa(incre1, 6);
