@@ -1,7 +1,7 @@
 function [t, Y] = AB2_Sistemas(f, a, b, N, Y0)
 % Código para resolver un PVI con el método de Adams-Bashfort de dos pasos
     % Tamaño de paso
-    h = (b - a)/N
+    h = (b - a)/N;
     % Se discretiza la variable temporal
     t = a:h:b;
     t = t(:);

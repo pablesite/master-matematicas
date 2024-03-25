@@ -1,4 +1,6 @@
-function [sol, iter, ACOC, incre1, incre2] = Newton(fun, x0, tol, maxiter)
+function [sol, iter, ACOC, incre1, incre2] = TO(fun, x0, tol, maxiter)
+    % Método de TO 
+
     digits(200)
     x0 = x0(:);
     iter = 0;
@@ -7,10 +9,12 @@ function [sol, iter, ACOC, incre1, incre2] = Newton(fun, x0, tol, maxiter)
     incre2 = tol + 1;
     p = [];
 
-    %while(incre2 > tol && incre1 > tol && iter < maxiter)
     while (incre1 + incre2 > tol && iter < maxiter)
-        % Cálculo de Newton
-        x1 = x0 - fx0/dfx0;
+        % Cálculo de TO
+        u = fx0/dfx0;
+        y = x0 - u;
+        [fy, ~] = feval(fun, y);
+        x1 = x0 - ((fy - fx0)/(2*fy - fx0))*u;
         
         % Actualizo criterio de parada
         incre1 = norm(x1 - x0);
