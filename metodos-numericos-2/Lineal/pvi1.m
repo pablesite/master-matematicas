@@ -1,0 +1,5 @@
+function [du]=pvi1(x,u)
+du=zeros(2,1);
+du(1)=u(2);
+du(2)= -(2./x).*u(2) +(2./(x.^2)).*u(1)+sin(log(x))./(x.^2);
+end
