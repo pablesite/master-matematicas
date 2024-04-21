@@ -1,12 +1,12 @@
 function [nodos ,solaprox ,t,iter,incre ] = DisparoSecanteP1(funcion ,a,b,alfa ,beta ,n,tol , maxiter )
 h=(b-a)/(n);  x=a:h:b;  x=x(:);
-t0=1;
+t0 = 1;
 
 [x,Y]= ode45 (funcion ,x ,[ alfa , t0]');
 yb0=Y(end ,1); %u(b,t0)
 ypb0=Y(end,2); %u'(b,t0) <----
 
-t1 =2;
+t1 = 2;
 [x,Y]= ode45 (funcion ,x ,[ alfa ,t1]');
 yb1=Y(end ,1); %u(b,t1)
 ypb1=Y(end,2); %u'(b,t1) <----  

@@ -7,16 +7,16 @@ function [nodos ,solaprox ,t,iter] = DisparoSecante (funcion ,a,b,alfa ,beta ,n,
     
     t1 = (beta - alfa)/(b-a);
     [x,Y] = ode45 (funcion ,x ,[ alfa ,t1]');
-    yb1 = Y(end ,1);
+    yb1 = Y(end,1);
     
     iter = 1; 
-    incre =abs(yb1 -beta);
+    incre = abs(yb1 - beta);
 
     while incre > tol && iter < maxiter
         t = t1-(t1-t0)*(yb1-beta)/(yb1-yb0); 
         
         [x,Y] = ode45 (funcion ,x ,[alfa ,t]');
-        incre =abs(Y(end ,1)-beta);
+        incre = abs(Y(end,1)-beta);
         
         iter = iter +1;
         t0 = t1; 
@@ -29,6 +29,6 @@ function [nodos ,solaprox ,t,iter] = DisparoSecante (funcion ,a,b,alfa ,beta ,n,
         nodos = x;
         solaprox = Y;
     else
-        disp('se necesitan mas iteraciones ')
+        disp('se necesitan más iteraciones ')
     end
 end
