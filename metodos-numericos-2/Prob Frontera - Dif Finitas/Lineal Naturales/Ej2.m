@@ -7,7 +7,7 @@ beta = 0.5-1/(6*log(3));
 a = 1; b = 3; N = 9; % N + 1 intervalos -> N + 2 nodos
 
 %% Se ejecuta el método de Diferencias Finitas para un problema líneal con condiciones Dirichlet
-[ri,yi] = DiFiLinealEj2(a, b, alfa, beta, N);
+[ri, yi] = DiFiLinealEj2(a, b, alfa, beta, N);
 
 %% Se calcula la solución exacta
 ex=@(r)1./(log(1/3)).*(log(r/3)-0.5.*log(r));

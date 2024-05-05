@@ -11,7 +11,7 @@ function [x,y] = DiFiLinealEj2(a, b, alfa, beta, N)
     x = a:h:b;
     x = x(:);
     
-    % Se calculan las 3 diagonales
+    %% Se calculan las 3 diagonales
     %% Diagonal superior
     % Forma general
     ds = x(1:end-1)+h/2; % Va de x(0) a x(N)
