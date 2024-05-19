@@ -1,21 +1,38 @@
-f=@(x,y,z)x.*y.*z-x.*cos(x).*y-sin(x);
-fy=@(x,y,z)x.*z-x.*cos(x);
-fz=@(x,y,z)x.*y;
-a=0;
-b=pi;
-alfa=1;
-beta=2;
-N=9;
-maxiter=50;
-tol=1e-5;
-[X,Y,iter ,incr ]= Difnolin3 (f,fy ,fz ,a,b,alfa , beta ,N,maxiter ,tol)
-%%
-ex=@(x) sin(x);
-exacta=sin(X);
-Error=abs(exacta-Y);
-%%
+clear all; close all;
+
+% Ejemplo 4: Para resolver el problema de contorno
+% y" = (32+2x^3-yy')/8 -> 1<=x<=3
+% y(1) = 17, y(3) = 43/3,
+
+%% Se define la función y'' y sus derivadas parciales en y' y en xx
+f    = @(x, y, y_p)  x.*y.*y_p-x.*cos(x).*y-sin(x);   % Ecuación diferencial de segundo orden
+fy   = @(x, y, y_p)  x.*y_p-x.*cos(x);                % Derivada parcial de f respecto a y
+fy_p = @(x, y, y_p)  x.*y;                            % Derivada parcial de f respecto a y' = y_p;
+
+%% Se establecen los parámetros iniciales
+a = 0; b = pi; alfa = 1; beta = 2; N = 9;
+maxiter = 50; tol = 1e-5; % Condiciones de parada
+
+%% Se ejecuta el método de Diferencias Finitas para un problema NO líneal con condiciones Dirichlet
+[X, Y, iter, incr] = Difnolin3(f, fy, fy_p, a, b, alfa, beta, N, maxiter, tol);
+
+%% Se calcula la solución exacta
+ex = @(x) sin(x);
+
+%% Se evalua la solución exacta en X y se calcula el Error
+exacta = ex(X);
+Error = abs(exacta-Y);
+
+%% Se imprimen por consola los resultados en precisión aritmética
+digits(8)
+[vpa(X), vpa(Y), vpa(exacta), vpa(Error)]
+
+%% Se representan las dos soluciones
 hold on
+grid on
+title("problema de frontera NO líneal - Naturales")
+xlabel('x');
+ylabel('y(x)');
 plot(X,Y,'*-r')
 plot(X,exacta,'b')
-%%
-X=vpa(X,6); Y=vpa(Y,6); Error=vpa(Error,6); exacta=vpa(exacta,6);
+legend('y(x) aproximada', 'y(x) exacta');

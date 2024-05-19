@@ -1,7 +1,7 @@
 clear all; close all;
 
 % Ejemplo 3: Para resolver el problema de contorno
-% y" = (32+2x^3-yy)/8 -> 1<=x<=3
+% y" = (32+2x^3-yy')/8 -> 1<=x<=3
 % y(1) = 17, y(3) = 43/3,
 
 %% Se define la función y'' y sus derivadas parciales en y' y en xx

@@ -1,4 +1,4 @@
-function [X, Y, iter, incr ] = Difnolin3(f, fy, fy_p, a, b, alfa, beta, N, maxiter, tol)
+function [X, Y, iter, incr ] = DifnolinNat(f, fy, fy_p, a, b, alfa, beta, N, maxiter, tol)
 
     % Se resuelve un problema de frontera de segundo orden NO líneal con 
     % condiciones Naturales aplicando diferencias finitas
@@ -29,7 +29,9 @@ function [X, Y, iter, incr ] = Difnolin3(f, fy, fy_p, a, b, alfa, beta, N, maxit
     while incr >tol && iter < maxiter
         % Estimacion de la derivada por diferencias centrales
         y_p = (Y(3:N+2)-Y(1:N))/(2*h);
-        y_p = [alfa-Y(1) y_p (Y(end)-beta)/2];
+        % El primer y último valor corresponde con la parte de y_p de las 
+        % ecuaciones primera y última del sistema no lineal
+        y_p = [(alfa-Y(1))/2 y_p (Y(end)-beta)/2];  
 
         % Se evaluan f, fy y fy_p
         fe    = feval (f,    x, y, y_p);
@@ -39,24 +41,24 @@ function [X, Y, iter, incr ] = Difnolin3(f, fy, fy_p, a, b, alfa, beta, N, maxit
         % Se calculan las 3 diagonales y los términos independientes
         % Diagonal principal
         dp = 2+h^2*fye;                                 
-        dp(1) = 2*(1-h)+h^2*fy_pe(1)-h^2*fy_pe(1);
-        dp(end) = (2-h)+h^2*fy_pe(end)+h^2/2*fy_pe(end);
+        dp(1) = (2-h)+h^2*fye(1)-h^2*fy_pe(1)/2; % df(0)/dy(0) (Jacobiana)
+        dp(end) = (2-h)+h^2*fye(end)+h^2*fy_pe(end)/2; % df(0)/dy(N+1)
 
         % Diagonal superior
-        ds = -1+h/2*fy_pe(1 :end -1);
-        ds(1) = -2;
+        ds = -1+h/2*fy_pe(1:end-1);
+        ds(1) = -2; % df(0)/dy(1)
         
         % Diagonal inferior
         di = -1-h/2*fy_pe(2:end);
-        di(end) = -2;
+        di(end) = -2; % df(N+1)/dy(N)
         
-        % Términos independientes (se usa diff en vez de la aproximación en diferencias finitas)
-        d(2:N+1) = -(-diff(Y,2)+h^2*fe(2:N+1));
-        d(1) = 2*(1-h)*y(1)-2*y(2)+h^2*fe(1)+2*h*alfa;
+        % Términos independientes
+        d(2:N+1) = -(-diff(Y,2)+h^2*fe(2:N+1)); % Se usa diff en vez de la aproximación en diferencias finitas
+        d(1) = (2-h)*y(1)-2*y(2)+h^2*fe(1)+h*alfa;
         d(1) = -d(1);
         
-        d(N+2) = -2*y(N+1)+(2-h)*y(N+2)+h^2*fe(N+2)+beta*h;
-        d(N+2) = -d(N+2);
+        d(N+2) = -2*y(N+1)+(2-h)*y(N+2)+h^2*fe(N+2)+beta*h; % CAMBIAR
+        d(N+2) = -d(N+2); 
         
         % Se resuelve el sistema lineal usando Crout
         z = Crout(dp,ds,di,d);
