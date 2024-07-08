@@ -1,9 +1,8 @@
-% Ejecutable: Ejemplo 7
 % Problema de Frontera - Disparo No Lineal -> Secante (Condiciones
 % Naturales)
-% y'' = 1/8*(32 + 2*x^3 - y*y'), x en [1, 3]
-% y(1) = 17
-% y(3) = 43/3 
+% ru'' + u' = -4r, r en [1, 3]
+% u(1) = ln(1/3) - 1
+% u(3) - u'(3) = 0.5*(ln(3) - 7) 
 
 clear all; close all;
 digits(8)
@@ -12,12 +11,12 @@ digits(8)
 % Frontera
 a = 1;
 b = 3;
-% Condición inicial
+% Condiciones iniciales
 alfa = log(1/3) - 1;
 beta = 0.5*(log(3) - 7);
 
 % Número de pasos de la x
-n = 19; % Solución [0:n+1] => n + 2
+n = 9; % Solución [0:n+1] => n + 2
 h = (b - a)/(n + 1); 
 
 % Criterios de parada
@@ -25,10 +24,10 @@ tol = 10e-07;
 maxiter = 100;
 
 %% Cálculo de la función
-[xi, yi, t, iter, incre] = DisparoSecanteP1('ej8', a, b, alfa, beta, h, tol, maxiter);
+[xi, yi, t, iter, incre] = T2cDisparoSecanteNat('T2cFunEjerc2', a, b, alfa, beta, h, tol, maxiter);
 
 %% Cálculo de la solución exacta (si la hay)
-yex = @(x)log(x./3)+1/2.*log(x)-x.^2;
+yex = @(x)log(x./3) + 1/2.*log(x) - x.^2;
 exacta = yex(xi);
 Error = abs(yi(:,1) - exacta);
 

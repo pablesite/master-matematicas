@@ -16,7 +16,7 @@ ci = @(x)0;
 cc2 = @(t)sin(t);
 
 %% Cálculo del sistema a resolver
-[u, x, t] = ExplicitoMixtas(ci, cc2, a, b, Tmax, h, k);
+[u, x, t] = ImplicitoMixtas(ci, cc2, a, b, Tmax, h, k);
 
 %% Solución Exacta
 exacta = @(x,t)sin(x.*t);
@@ -25,14 +25,15 @@ ex = exacta(x, 0.5);
 %% Representación de los resultados
 % Solución aproximada estable
 figure(1)
-%title('Problema de contorno multidimensional parabólico, explícito, mixtas. Estable');
+%title('Problema de contorno multidimensional parabólico, implícito, mixtas.');
 hold on
 grid on
 %plot(x, ex, 'r')
 plot(x, u(:, end), '*--b')
 xlabel('x');
-ylabel('u');
+ylabel('u(x)');
 legend('u(x) - aproximada');
+
 
 % Crear mallas para las coordenadas X e Y
 [T, X] = meshgrid(t, x);
@@ -53,5 +54,4 @@ zlabel('u(x,t)');
 % Tabla de datos
 format long e
 [x', u(:,(end-1)/4), u(:,(end-1)/2), u(:,3*(end-1)/4), u(:,end)]
-
 

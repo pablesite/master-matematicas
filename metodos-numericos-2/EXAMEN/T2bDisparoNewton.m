@@ -1,7 +1,7 @@
-function [nodos, solaprox, t, iter ] = DisparoNewton (funcion, a, b, alfa, beta, h, tol, maxiter)
-    
+function [nodos, solaprox, t, iter ] = T2bDisparoNewton(funcion, a, b, alfa, beta, h, tol, maxiter)
     % Vector de nodos
-    x = a:h:b; 
+    x = a:h:b;
+    x = x(:);
   
     % Solución de los dos PVIs conjuntos
     t0 = 0;

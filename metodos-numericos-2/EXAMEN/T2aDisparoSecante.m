@@ -1,10 +1,9 @@
-function [nodos, solaprox, t, iter] = DisparoSecante(funcion, a, b, alfa, beta, h, tol, maxiter)
+function [nodos, solaprox, t, iter] = T2aDisparoSecante(funcion, a, b, alfa, beta, t0, h, tol, maxiter)
     % Vector de nodos
     x = a:h:b;  
     x = x(:);
 
     % Solución del primer PVI
-    t0 = 0;
     [x, Y] = ode45 (funcion, x, [alfa, t0]');
     yb0 = Y(end ,1);
 
@@ -41,6 +40,6 @@ function [nodos, solaprox, t, iter] = DisparoSecante(funcion, a, b, alfa, beta, 
         nodos = x;
         solaprox = Y;
     else
-        disp('Se necesitan más iteraciones')
+        disp('Se necesitan más iteraciones ')
     end
 end

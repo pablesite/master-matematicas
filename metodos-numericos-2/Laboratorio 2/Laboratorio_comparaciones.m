@@ -16,30 +16,34 @@ ci = @(x)0;
 cc2 = @(t)sin(t);
 
 %% Cálculo del sistema a resolver
-[u, x, t] = ExplicitoMixtas(ci, cc2, a, b, Tmax, h, k);
+[u_exp, x_exp, t_exp] = ExplicitoMixtas(ci, cc2, a, b, Tmax, h, k);
+[u_imp, x_imp, t_imp] = ImplicitoMixtas(ci, cc2, a, b, Tmax, h, k);
+[u_cn, x_cn, t_cn] = Cranck_NicholsonMixtas(ci, cc2, a, b, Tmax, h, k);
 
 %% Solución Exacta
-exacta = @(x,t)sin(x.*t);
-ex = exacta(x, 0.5);
+exacta = @(x_exp,t_exp)sin(x_exp.*t_exp);
+ex = exacta(x_exp, Tmax);
 
 %% Representación de los resultados
 % Solución aproximada estable
 figure(1)
-%title('Problema de contorno multidimensional parabólico, explícito, mixtas. Estable');
+%title('Problema de contorno multidimensional parabólico, implícito, mixtas.');
 hold on
 grid on
-%plot(x, ex, 'r')
-plot(x, u(:, end), '*--b')
+plot(x_exp, ex, 'g')
+plot(x_exp, u_exp(:, end), '*--b')
+plot(x_imp, u_imp(:, end), '*--k')
+plot(x_cn, u_cn(:, end), '*--r')
 xlabel('x');
-ylabel('u');
-legend('u(x) - aproximada');
+ylabel('u(x)');
+legend('Exacta', 'Explícito', 'Implícito', 'Cranck-Nicholson');
 
 % Crear mallas para las coordenadas X e Y
-[T, X] = meshgrid(t, x);
+[T, X] = meshgrid(t_exp, x_exp);
 
 % Graficar
 figure;
-mesh(X, T, u);
+mesh(X, T, u_exp);
 
 % Mejorar la visualización
 colormap(sky(100)); % Usar un mapa de colores para mejor visualización
@@ -49,9 +53,3 @@ xlabel('x');
 ylabel('t');
 zlabel('u(x,t)');
 %title('Representación 3D de la Función');
-
-% Tabla de datos
-format long e
-[x', u(:,(end-1)/4), u(:,(end-1)/2), u(:,3*(end-1)/4), u(:,end)]
-
-
