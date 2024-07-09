@@ -14,7 +14,7 @@ a = 1; b = 3; alfa = 17; beta = 43/3; N = 19;
 maxiter = 50; tol = 1e-5; % Condiciones de parada
 
 %% Se ejecuta el método de Diferencias Finitas para un problema NO líneal con condiciones Dirichlet
-[X, Y, iter, incr] = Difnolin(f, fy, fy_p, a, b, alfa, beta, N, maxiter, tol);
+[X, Y, iter, incr] = T3aDifnolin(f, fy, fy_p, a, b, alfa, beta, N, maxiter, tol);
 
 %% Se calcula la solución exacta
 ex = @(x)x.^2 + 16./x;

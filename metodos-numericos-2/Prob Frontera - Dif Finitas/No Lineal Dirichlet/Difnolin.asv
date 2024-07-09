@@ -27,7 +27,7 @@ function [X, Y, iter, incr] = Difnolin(f, fy, fy_p, a, b, alfa, beta, N, maxiter
     %% Se arranca el bucle
     while incr>tol && iter<maxiter
         % Estimacion de la derivada por diferencias centrales
-        y_p = (Y(3:N+2) - Y(1:N))/(2*h);
+        y_p = (Y(3:N+2)-Y(1:N))/(2*h);
 
         % Se evaluan f, fy y fy_p
         fe    = feval (f,    x, y, y_p);
@@ -35,16 +35,16 @@ function [X, Y, iter, incr] = Difnolin(f, fy, fy_p, a, b, alfa, beta, N, maxiter
         fy_pe = feval (fy_p, x, y, y_p);
         
         % Se calculan las 3 diagonales y los términos independientes
-        ds = -1 + h/2*fy_pe(1:end - 1); % Diagonal superior
-        dp =  2 + h^2*fye;            % Diagonal principal
-        di = -1 - h/2*fy_pe(2:end);   % Diagonal inferior
-        d  = -(-diff(Y, 2) + h^2*fe);  % Términos independientes (se usa diff en vez de la aproximación en diferencias finitas)
+        ds = -1+h/2*fy_pe(1:end-1); % Diagonal superior
+        dp =  2+h^2*fye;            % Diagonal principal
+        di = -1-h/2*fy_pe(2:end);   % Diagonal inferior
+        d  = -(-diff(Y,2)+h^2*fe);  % Términos independientes (se usa diff en vez de la aproximación en diferencias finitas)
         
         % Se resuelve el sistema lineal usando Crout
         z = Crout(dp, ds, di, d); 
 
         % Se calcula la siguiente iteración de la y.
-        y = y + z'; % Se traspone la z para que quede un vector columna
+        y = y+z'; % Se traspone la z para que quede un vector columna
 
         % Se construye la solución final incluyendo el valor inicial y el
         % final.
@@ -52,7 +52,7 @@ function [X, Y, iter, incr] = Difnolin(f, fy, fy_p, a, b, alfa, beta, N, maxiter
 
         % Se actualizan los criterios de parada
         incr = max(abs(z));
-        iter = iter + 1;
+        iter = iter+1;
     end
 
     % Vectores columna

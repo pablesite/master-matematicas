@@ -14,7 +14,7 @@ a = 0; b = pi; alfa = 1; beta = 2; N = 9;
 maxiter = 50; tol = 1e-5; % Condiciones de parada
 
 %% Se ejecuta el método de Diferencias Finitas para un problema NO líneal con condiciones Dirichlet
-[X, Y, iter, incr] = Difnolin3(f, fy, fy_p, a, b, alfa, beta, N, maxiter, tol);
+[X, Y, iter, incr] = T3bDifnolinNat(f, fy, fy_p, a, b, alfa, beta, N, maxiter, tol);
 
 %% Se calcula la solución exacta
 ex = @(x) sin(x);

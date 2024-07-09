@@ -1,4 +1,4 @@
-function [u, x, t] = CalorExplDir(alpha, ci, h1, h2, L, nx, Tmax, nt)
+function [u, x, t] = T5aExplicitoDir(alpha, ci, h1, h2, L, nx, Tmax, nt)
     % Método explícito para la ecuación del calor con condiciones Dirichlet
     
     % Inicialización de parámetros

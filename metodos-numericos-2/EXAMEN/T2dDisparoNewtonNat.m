@@ -1,6 +1,6 @@
-function [nodos ,solaprox ,t,iter, incre ] = DisparoNewtonP1 (funcion, a, b, alfa, beta, h, tol, maxiter)
+function [nodos ,solaprox ,t,iter, incre ] = T2dDisparoNewtonNat(funcion, a, b, alfa, beta, h, tol, maxiter)
     % ru'' + u' = 0, x en [1, 3]
-    % u'' + u' = 0, x en [1, 3]
+    % u''= -u'/r, x en [1, 3]
     % u(1) + u'(1) = 1 - 1/(2*ln(3))
     % u(3) + u'(3) = 0.5 - 1/(6*ln(3)) 
 

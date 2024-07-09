@@ -1,4 +1,4 @@
-function [X, Y, iter, incr] = Difnolin(f, fy, fy_p, a, b, alfa, beta, N, maxiter, tol)
+function [X, Y, iter, incr] = T3aDifnolin(f, fy, fy_p, a, b, alfa, beta, N, maxiter, tol)
     % Se resuelve un problema de frontera de segundo orden NO líneal con 
     % condiciones Dirichlet aplicando diferencias finitas
 
@@ -41,7 +41,7 @@ function [X, Y, iter, incr] = Difnolin(f, fy, fy_p, a, b, alfa, beta, N, maxiter
         d  = -(-diff(Y, 2) + h^2*fe);  % Términos independientes (se usa diff en vez de la aproximación en diferencias finitas)
         
         % Se resuelve el sistema lineal usando Crout
-        z = Crout(dp, ds, di, d); 
+        z = T3aCrout(dp, ds, di, d); 
 
         % Se calcula la siguiente iteración de la y.
         y = y + z'; % Se traspone la z para que quede un vector columna
