@@ -1,7 +1,8 @@
 % Ejecutable: Ejemplo 7
 % Problema de Frontera - Disparo No Lineal -> Secante (Condiciones
 % Naturales)
-% y'' = 1/8*(32 + 2*x^3 - y*y'), x en [1, 3]
+% ru'' + u' = 0, x en [1, 3]
+% u'' + u' = 0, x en [1, 3]
 % y(1) = 17
 % y(3) = 43/3 
 
