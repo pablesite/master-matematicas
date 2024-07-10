@@ -17,16 +17,16 @@ ci = @(x)sin(pi.*x);
 h1 = @(t)0;
 h2 = @(t)0;
 % Número de pasos de la x.
-nx = (L-0)/0.1; % nx = (L-0)/h;
+nx = (L - 0)/0.1; % nx = (L-0)/h;
 % Número de pasos de la t.
 
 %% a) Cálculo de la función (Estable)
 nt = (Tmax-0)/0.0005; % nt = (Tmax-0)/k
-[ua, xa, ta] = CalorExplDir(alpha, ci, h1, h2, L, nx, Tmax, nt);
+[ua, xa, ta] = T5aExplicitoDir(alpha, ci, h1, h2, L, nx, Tmax, nt);
 
 %% b) Cálculo de la función (Inestable)
 nt = (0.5-0)/0.01; % nt = (Tmax-0)/k
-[ub, xb, tb] = CalorExplDir(alpha, ci, h1, h2, L, nx, Tmax, nt);
+[ub, xb, tb] = T5aExplicitoDir(alpha, ci, h1, h2, L, nx, Tmax, nt);
 
 %% Solución Exacta
 exacta = @(x,t)exp(-pi^2.*t).*sin(pi.*x);
