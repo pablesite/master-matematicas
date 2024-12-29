@@ -23,7 +23,7 @@ while grad_norm > epsilon && iter < max_iter
     %alpha = busqueda_dorada(u, grad, n); % Optimizar alpha
 
     % Optimizar alpha mediante la búsqueda dicotómica
-    %alpha = busqueda_dicotomica(u, grad, n); % Si lo busco dinámico, acaba
+    alpha = busqueda_dicotomica(u, grad, n); % Si lo busco dinámico, acaba
     %convergiendo en un alpha de 0.0059, pero esto no hace que el gradiente
     %disminuya y sale del bucle por el número de iteraciones.
     % Si lo pongo fijo, me va guay con 0.005.. en este caso el gradiente sí
