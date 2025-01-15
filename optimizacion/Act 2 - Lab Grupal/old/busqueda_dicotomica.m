@@ -2,13 +2,16 @@ function alpha_opt = busqueda_dicotomica(u, grad, n)
     % Parámetros de la búsqueda
     a = 0; % Límite inferior
     b = 1; % Límite superior
-    tol = 1e-7; % Tolerancia
+    tol = 1e-5; % Tolerancia
     epsilon = tol / 10; % Desplazamiento pequeño para evaluar
     
     while (b - a) > tol
+
+        x = (a + b) / 2;
+
         % Dividir el intervalo
-        alpha1 = (a + b) / 2 - epsilon;
-        alpha2 = (a + b) / 2 + epsilon;
+        alpha1 = x - epsilon/2;
+        alpha2 = x + epsilon/2;
         
         % Evaluar la función objetivo en alpha1 y alpha2
         f1 = area_func(u - alpha1 * grad, n);
