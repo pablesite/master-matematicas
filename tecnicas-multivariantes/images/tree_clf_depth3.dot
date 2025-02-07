@@ -1,21 +1,21 @@
 digraph Tree {
 node [shape=box, style="filled, rounded", color="black", fontname="helvetica"] ;
 edge [fontname="helvetica"] ;
-0 [label="Na_to_K <= 14899.0\ngini = 0.715\nsamples = 150\nvalue = [21.0, 15.0, 11.0, 39.0, 64.0]\nclass = drugB", fillcolor="#f9d2f1"] ;
-1 [label="BP <= 0.5\ngini = 0.718\nsamples = 91\nvalue = [21, 15, 11, 39, 5]\nclass = drugC", fillcolor="#cdccf8"] ;
+0 [label="Na_to_K <= 14839.0\ngini = 0.69\nsamples = 150\nvalue = [19, 11, 12, 38, 70]\nclass = drugC", fillcolor="#f8c6ed"] ;
+1 [label="BP <= 0.5\ngini = 0.715\nsamples = 86\nvalue = [19, 11, 12, 38, 6]\nclass = drugA", fillcolor="#c8c7f8"] ;
 0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
-2 [label="Age <= 50.5\ngini = 0.536\nsamples = 38\nvalue = [21.0, 15.0, 0.0, 0.0, 2.0]\nclass = drugY", fillcolor="#f8decb"] ;
+2 [label="Age <= 50.0\ngini = 0.525\nsamples = 32\nvalue = [19, 11, 0, 0, 2]\nclass = drugY", fillcolor="#f5cfb4"] ;
 1 -> 2 ;
-3 [label="gini = 0.159\nsamples = 23\nvalue = [21, 0, 0, 0, 2]\nclass = drugY", fillcolor="#e78d4c"] ;
+3 [label="gini = 0.172\nsamples = 21\nvalue = [19, 0, 0, 0, 2]\nclass = drugY", fillcolor="#e88e4e"] ;
 2 -> 3 ;
-4 [label="gini = 0.0\nsamples = 15\nvalue = [0, 15, 0, 0, 0]\nclass = drugA", fillcolor="#7be539"] ;
+4 [label="gini = 0.0\nsamples = 11\nvalue = [0, 11, 0, 0, 0]\nclass = drugX", fillcolor="#7be539"] ;
 2 -> 4 ;
-5 [label="BP <= 1.5\ngini = 0.412\nsamples = 53\nvalue = [0, 0, 11, 39, 3]\nclass = drugC", fillcolor="#7d7bee"] ;
+5 [label="BP <= 1.5\ngini = 0.45\nsamples = 54\nvalue = [0, 0, 12, 38, 4]\nclass = drugA", fillcolor="#8684ef"] ;
 1 -> 5 ;
-6 [label="gini = 0.538\nsamples = 24\nvalue = [0, 0, 11, 12, 1]\nclass = drugC", fillcolor="#f0f0fd"] ;
+6 [label="gini = 0.532\nsamples = 27\nvalue = [0, 0, 12, 14, 1]\nclass = drugA", fillcolor="#e5e5fc"] ;
 5 -> 6 ;
-7 [label="gini = 0.128\nsamples = 29\nvalue = [0, 0, 0, 27, 2]\nclass = drugC", fillcolor="#4a48e7"] ;
+7 [label="gini = 0.198\nsamples = 27\nvalue = [0, 0, 0, 24, 3]\nclass = drugA", fillcolor="#5452e8"] ;
 5 -> 7 ;
-8 [label="gini = 0.0\nsamples = 59\nvalue = [0, 0, 0, 0, 59]\nclass = drugB", fillcolor="#e539c0"] ;
+8 [label="gini = 0.0\nsamples = 64\nvalue = [0, 0, 0, 0, 64]\nclass = drugC", fillcolor="#e539c0"] ;
 0 -> 8 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
 }
