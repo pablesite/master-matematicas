@@ -1,5 +1,5 @@
 function [x_min, iter] = incu(f, x1, x2, x3, delta)
-    % Método de búsqueda dicotómica
+    % Método de interpolación cuadrática
     % Entradas:
     %   f: función objetivo
     %   a, b: extremos iniciales del intervalo unimodal

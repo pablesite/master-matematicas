@@ -17,9 +17,7 @@ function f = funcionrr(x_vec)
 
 end
 
-
 function px = campo_pendulo(t,x)
-
     px(1)= x(2);
     px(2)=sin(x(1))+0.5*sin(t);
     px=px';
