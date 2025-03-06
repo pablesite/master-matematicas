@@ -1,7 +1,7 @@
 digraph Tree {
 node [shape=box, style="filled, rounded", color="black", fontname="helvetica"] ;
 edge [fontname="helvetica"] ;
-0 [label="proline <= 755.0\ngini = 0.658\nsamples = 178\nvalue = [59.0, 71.0, 48.0]\nclass = class_1", fillcolor="#ebfcf2"] ;
+0 [label="proline <= 755.0\ngini = 0.658\nsamples = 178\nvalue = [59, 71, 48]\nclass = class_1", fillcolor="#ebfcf2"] ;
 1 [label="od280/od315_of_diluted_wines <= 2.115\ngini = 0.492\nsamples = 111\nvalue = [2, 67, 42]\nclass = class_1", fillcolor="#b7f6d1"] ;
 0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
 2 [label="hue <= 0.935\ngini = 0.227\nsamples = 46\nvalue = [0, 6, 40]\nclass = class_2", fillcolor="#9457e9"] ;
